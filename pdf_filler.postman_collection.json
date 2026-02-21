@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "7d9c1e7a-3f4b-4a5c-8d9e-1f2a3b4c5d6e",
+		"name": "PDF Form Auto-Fill API",
+		"description": "Stateless REST API to fill AcroForm PDFs. Built with FastAPI.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "Simple uptime check."
+			},
+			"response": []
+		},
+		{
+			"name": "Inspect PDF",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": [],
+							"description": "PDF file to inspect"
+						},
+						{
+							"key": "pdf_url",
+							"value": "https://www.irs.gov/pub/irs-pdf/fw9.pdf",
+							"type": "text",
+							"description": "OR provide a URL to a PDF",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/inspect",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"inspect"
+					]
+				},
+				"description": "Lists all fillable field names and types in a PDF."
+			},
+			"response": []
+		},
+		{
+			"name": "Fill PDF",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": [],
+							"description": "PDF file to fill"
+						},
+						{
+							"key": "fields",
+							"value": "{\"first_name\": \"John\", \"agree_to_terms\": true}",
+							"type": "text",
+							"description": "JSON object of field name -> value"
+						},
+						{
+							"key": "pdf_url",
+							"value": "https://example.com/form.pdf",
+							"type": "text",
+							"description": "OR provide a URL",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/fill?download=false",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"fill"
+					],
+					"query": [
+						{
+							"key": "download",
+							"value": "false",
+							"description": "If true, returns binary PDF. If false, returns JSON Base64."
+						}
+					]
+				},
+				"description": "Fills the PDF fields and returns a base64 encoded PDF."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
